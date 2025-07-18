@@ -1,23 +1,23 @@
 pipeline {
     agent any
     tools {
-        maven "MVN_339"
+        maven "MVN_LTS"
     }
 
     stages {
         stage('Github') {
             steps {
-                git branch: 'main', url: 'https://github.com/gpalabral/CICD.git'
+                git branch: 'main', url: 'https://github.com/ccaverotx/CICD.git'
             }
         }
         stage('Clean Compile'){
             steps{
-                sh 'mvn clean compile'    
+                bat 'mvn clean compile'    
             }    
         }
         stage('Package'){
             steps{
-                sh 'mvn package'    
+                bat 'mvn package'    
             }    
         }
     }
