@@ -10,15 +10,27 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/ccaverotx/CICD.git'
             }
         }
-        stage('Clean Compile'){
-            steps{
-                bat 'mvn clean compile'    
-            }    
+
+        stage('Clean Compile') {
+            steps {
+                bat 'mvn clean compile'
+            }
         }
-        stage('Package'){
-            steps{
-                bat 'mvn package'    
-            }    
+
+        stage('Package') {
+            steps {
+                bat 'mvn package'
+            }
+        }
+
+        stage('Deploy to Tomcat') {
+            steps {
+                bat '''
+                    echo ===== DEPLOYING TO TOMCAT =====
+                    copy target\\JsfDemoApp-1.0-SNAPSHOT.war "C:\\Users\\ccaverotx\\Downloads\\apache-tomcat-9.0.107-windows-x64\\apache-tomcat-9.0.107\\webapps\\JsfDemoApp.war" /Y
+                    echo ===== WAR FILE DEPLOYED =====
+                '''
+            }
         }
     }
 }
