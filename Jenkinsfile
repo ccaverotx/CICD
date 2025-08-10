@@ -4,11 +4,10 @@ pipeline {
 
   environment {
     APP_NAME   = 'SGRRHH'
-    // AJUSTA esta ruta a tu instalación real:
     TOMCAT_DEV = 'C:\\Users\\ccaverotx\\Downloads\\apache-tomcat-9.0.107-windows-x64\\apache-tomcat-9.0.107'
     WAR_SRC    = 'target\\JsfDemoApp-1.0-SNAPSHOT.war'
     WAR_DST    = "${TOMCAT_DEV}\\webapps\\${APP_NAME}.war"
-    BASE_URL   = 'http://localhost:8181' // cambia a 8080 si usas 8080
+    BASE_URL   = 'http://localhost:8181'
   }
 
   stages {
@@ -33,7 +32,6 @@ pipeline {
 
     stage('Smoke Test') {
       steps {
-        // Reintenta hasta ~30s a que Tomcat expanda el WAR
         bat """
           powershell -Command "$i=0; do { try { (Invoke-WebRequest -UseBasicParsing ${BASE_URL}/${APP_NAME}/).StatusCode; exit 0 } catch { Start-Sleep -s 3; $i++ } } while ($i -lt 10); exit 1"
         """
